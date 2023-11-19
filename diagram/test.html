@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example</title>
+        <style>
+            .entity-set {
+                position: absolute;
+                border-collapse: collapse;
+                border: solid;
+                display: inline-table;
+                background-color: lightpink;
+                width: 150px;
+                height: 175px;
+                padding: 10px;
+            }
+            .entity-set thead {
+                border: solid;
+                background-color: deeppink;
+                padding: 10px;
+            }
+            .entity-set td {
+                border: none;
+                padding: 10px;
+            }
+            .relation {
+                position: absolute;
+                display: inline-block;
+                text-align: center;
+                border: solid;
+                rotate: 45deg;
+                background-color: lightpink;
+                padding: 5px;
+                width: 75px;
+                height: 75px;
+            }
+            .relation-text {
+                text-align: center;
+                vertical-align: middle;
+                rotate: -45deg;
+                padding: 5px;
+                width: 75px;
+                height: 75px;
+                display: table-cell;
+            }
+            .solid-stroke {
+                stroke:rgb(255,20,147);
+                stroke-width:4;
+            }
+            .dashed-stroke {
+                stroke:rgb(255,20,147);
+                stroke-width:4;
+                stroke-dasharray: 10, 10;
+            }
+        </style>
+        <script src="er.js"></script>
+    </head>
+    <body>
+        <table id="course" class="entity-set"></table>
+        <div class="relation" id="uses-reference-container"><div class="relation-text" id="uses-reference"></div></div>
+        <table id="reference_book" class="entity-set"></table>
+        <div class="relation" id="teaches-container"><div class="relation-text" id="teaches"></div></div>
+        <table id="instructor" class="entity-set"></table>
+        <svg width="2000px" height="2000px" id="svg-container">
+            <defs>
+                <marker
+                        id="triangle"
+                        viewBox="0 0 10 10"
+                        refX="1"
+                        refY="5"
+                        markerUnits="strokeWidth"
+                        markerWidth="10"
+                        markerHeight="10"
+                        orient="auto">
+                    <path d="M 0 0 L 5 5 L 0 10 z" fill="#ff1493" />
+                </marker>
+              </defs>
+            <line id="course-uses-reference" class="solid-stroke" marker-end="url(#triangle)"></line>
+            <line id="reference_book-uses-reference" class="solid-stroke"></line>
+            <line id="course-teaches" class="solid-stroke" marker-end="url(#triangle)"></line>
+            <line id="instructor-teaches" class="dashed-stroke"></line>
+        </svg>
+        <script>
+            let es1 = new EntitySet("course");
+            let pk = "id";
+            es1.add_pk(pk);
+            es1.add_attr("title");
+            es1.add_attr("credit_hours");
+            es1.draw(50, 50);
+            let es2 = new EntitySet("reference_book");
+            es2.add_pk("id");
+            es2.add_attr("title");
+            es2.add_attr("first_author");
+            es2.draw(500, 50);
+            let es3 = new EntitySet("instructor");
+            es3.add_pk("id");
+            es3.add_attr("name");
+            es3.add_attr("salary");
+            es3.draw(50, 500);
+            let r1 = new Relation(es1.name, 0, es2.name, 1, "uses-reference");
+            r1.draw();
+            let r2 = new Relation(es1.name, 0, es3.name, 0, "teaches");
+            r2.draw();
+        </script>
+    </body>
+</html>
