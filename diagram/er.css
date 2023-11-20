@@ -1,0 +1,48 @@
+.entity-set {
+    position: absolute;
+    border-collapse: collapse;
+    border: solid;
+    display: inline-table;
+    background-color: lightpink;
+    width: 150px;
+    height: 175px;
+    padding: 10px;
+}
+.entity-set thead {
+    border: solid;
+    background-color: deeppink;
+    padding: 10px;
+}
+.entity-set td {
+    border: none;
+    padding: 10px;
+}
+.relation {
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    border: solid;
+    rotate: 45deg;
+    background-color: lightpink;
+    padding: 5px;
+    width: 75px;
+    height: 75px;
+}
+.relation-text {
+    text-align: center;
+    vertical-align: middle;
+    rotate: -45deg;
+    padding: 5px;
+    width: 75px;
+    height: 75px;
+    display: table-cell;
+}
+.solid-stroke {
+    stroke:rgb(255,20,147);
+    stroke-width:4;
+}
+.dashed-stroke {
+    stroke:rgb(255,20,147);
+    stroke-width:4;
+    stroke-dasharray: 10, 10;
+}

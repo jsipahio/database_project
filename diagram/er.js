@@ -7,11 +7,12 @@ class ForeignKey {
 class EntitySet {
     constructor(name) {
         this.name = name;
+        this.pk = new Array();
         this.attr = new Array();
     }
 
     add_pk(pk) {
-        this.pk = pk;
+        this.pk.push(pk);
     }
 
     add_fk(fk) {
@@ -34,12 +35,16 @@ class EntitySet {
         th.appendChild(name);
         row.appendChild(th);
 
-        let tbody = tbl.createTBody();
-        row = tbody.insertRow();
         let td = document.createElement("td");
-        td.innerHTML = "<u>" + this.pk + "</u>";
-        td.id = this.name + "-pk";
-        row.appendChild(td);
+
+        let tbody = tbl.createTBody();
+        this.pk.forEach((pk) => {
+            console.log(pk);
+            row = tbody.insertRow();
+            td.innerHTML = "<u>" + pk + "</u>";
+            td.id = this.name + "-pk";
+            row.appendChild(td);
+        });
 
         this.attr.forEach((attr) => {
             row = tbody.insertRow();

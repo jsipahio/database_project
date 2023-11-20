@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ER Diagrams</title>
+        <link rel="stylesheet" href="er.css">
+        <script src="er.js"></script>
+    </head>
+    <body>
+        <table id="Animal" class="entity-set"></table>
+        <script>
+            let animal = new EntitySet("Animal");
+            animal.add_pk("animal_id");
+            animal.add_pk("other_pk")
+            animal.add_attr("attr");
+            animal.draw(50,50);
+        </script>
+    </body>
+</html>
