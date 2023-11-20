@@ -35,14 +35,16 @@ class EntitySet {
         th.appendChild(name);
         row.appendChild(th);
 
-        let td = document.createElement("td");
+        let td;// = document.createElement("td");
 
         let tbody = tbl.createTBody();
+        
         this.pk.forEach((pk) => {
+            td = document.createElement("td")
             console.log(pk);
             row = tbody.insertRow();
             td.innerHTML = "<u>" + pk + "</u>";
-            td.id = this.name + "-pk";
+            td.id = this.name + "-pk-" + pk;
             row.appendChild(td);
         });
 
