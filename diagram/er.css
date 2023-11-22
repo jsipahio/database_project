@@ -1,11 +1,14 @@
+body {
+    font-family: sans-serif;
+}
 .entity-set {
     position: absolute;
     border-collapse: collapse;
     border: solid;
     display: inline-table;
     background-color: lightpink;
-    width: 150px;
-    height: 175px;
+    width: 200px;
+    height: 425px;
     padding: 10px;
 }
 .entity-set thead {
@@ -25,16 +28,16 @@
     rotate: 45deg;
     background-color: lightpink;
     padding: 5px;
-    width: 75px;
-    height: 75px;
+    width: 125px;
+    height: 125px;
 }
 .relation-text {
     text-align: center;
     vertical-align: middle;
     rotate: -45deg;
     padding: 5px;
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     display: table-cell;
 }
 .solid-stroke {
@@ -45,4 +48,8 @@
     stroke:rgb(255,20,147);
     stroke-width:4;
     stroke-dasharray: 10, 10;
+}
+.double-stroke {
+    stroke:rgb(255,20,147);
+    stroke-width:2;
 }

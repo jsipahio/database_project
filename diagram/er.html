@@ -7,12 +7,82 @@
     </head>
     <body>
         <table id="Animal" class="entity-set"></table>
+        <table id="Shelter" class="entity-set"></table>
+        <table id="Adopter" class="entity-set"></table>
+        <table id="Adoption_Details" class="entity-set" style="height: 200px;"></table>
+        <div class="relation" id="houses_animal-container"><div class="relation-text" id="houses_animal"></div></div>
+        <!-- <div class="relation" id="adopts_animal-container"><div class="relation-text" id="adopts_animal"></div></div> -->
+        <div class="relation" id="animal_adoption-container"><div class="relation-text" id="animal_adoption"></div></div>
+        <div class="relation" id="shelter_adoption-container"><div class="relation-text" id="shelter_adoption"></div></div>
+        <div class="relation" id="adopter_adoption-container"><div class="relation-text" id="adopter_adoption"></div></div>
+        <svg width="2000px" height="2000px" id="svg-container">
+            <defs>
+                <marker
+                        id="triangle"
+                        viewBox="0 0 10 10"
+                        refX="1"
+                        refY="5"
+                        markerUnits="strokeWidth"
+                        markerWidth="10"
+                        markerHeight="10"
+                        orient="auto">
+                    <path d="M 0 0 L 5 5 L 0 10 z" fill="#ff1493" />
+                </marker>
+              </defs>
+              <line x1="20px" x2="20px" y1="20px" y2="40px" class="solid-stroke" marker-end="url(#triangle)" />
+            <line id="Animal-houses_animal" class="solid-stroke"></line>
+            <line id="Shelter-houses_animal" class="solid-stroke"></line>
+            <line id="Animal-adopts_animal" class="solid-stroke"></line>
+            <line id="Adopter-adopts_animal" class="solid-stroke"></line>
+            <line id="Animal-animal_adoption" class="solid-stroke"></line>
+            <line id="Adoption_Details-animal_adoption2" class="double-stroke"></line>
+            <line id="Adoption_Details-animal_adoption" class="double-stroke"></line>
+            <line id="Shelter-shelter_adoption" class="solid-stroke"></line>
+            <line id="Adoption_Details-shelter_adoption2" class="double-stroke"></line>
+            <line id="Adoption_Details-shelter_adoption" class="double-stroke"></line>
+            <line id="Adopter-adopter_adoption" class="solid-stroke"></line>
+            <line id="Adoption_Details-adopter_adoption2" class="double-stroke"></line>
+            <line id="Adoption_Details-adopter_adoption" class="double-stroke"></line>
+        </svg>
+        
         <script>
             let animal = new EntitySet("Animal");
             animal.add_pk("animal_id");
-            animal.add_pk("other_pk")
-            animal.add_attr("attr");
-            animal.draw(50,50);
+            let animal_attributes = ["animal_name", "type", "breed", "gender", "age", "date_received", "is_vaxed", "is_fixed", "fees"]
+            animal_attributes.forEach((attr) => { animal.add_attr(attr); });
+
+            let shelter = new EntitySet("Shelter");
+            shelter.add_pk("shelter_id");
+            let shelter_attributes = ["shelter_name", "address", "phone_num", "email_address"];
+            shelter_attributes.forEach((attr) => {shelter.add_attr(attr);});
+
+            let houses_animal = new Relation(animal.name, 0, shelter.name, 0, "houses_animal");
+
+            let adopter = new EntitySet("Adopter");
+            adopter.add_pk("adopter_id");
+            let adpoter_attributes = ["name", "address", "phone_num", "email_address"];
+            adpoter_attributes.forEach((attr) => {adopter.add_attr(attr);});
+
+            let adopts_animal = new Relation(adopter.name, 0, animal.name, 0, "adopts_animal");
+
+            let adoption_details = new EntitySet("Adoption_Details");
+            adoption_details.add_pk("adoption_id");
+            adoption_details.add_attr("adopiton_date");
+
+            let animal_adoption = new Relation(adoption_details.name, 0, animal.name, 0, "animal_adoption");
+            let shelter_adoption = new Relation(adoption_details.name, 0, shelter.name, 0,"shelter_adoption");
+            let adopter_adoption = new Relation(adoption_details.name, 0, adopter.name, 0, "adopter_adoption");
+
+            shelter.draw(1350, 50);
+            animal.draw(750, 50);
+            adoption_details.draw(750, 950);
+            adopter.draw(1350, 837.5)
+
+            houses_animal.draw();
+            //adopts_animal.draw();
+            animal_adoption.draw();
+            shelter_adoption.draw();
+            adopter_adoption.draw();
         </script>
     </body>
 </html>

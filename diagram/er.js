@@ -112,29 +112,54 @@ class Relation {
 
         console.log("offset width: %d, offset height %d", offsetWidth, offsetHeight)
 
-        t1_r.setAttribute('x2', t1Center.x + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
-        t1_r.setAttribute('x1', contDivCenter.x  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
-        t1_r.setAttribute('y2', t1Center.y + (t1pos.height * offsetHeight/2 + 10 * offsetHeight));
-        t1_r.setAttribute('y1', contDivCenter.y - (contDivPos.height * offsetHeight/2 - 10 * offsetHeight) - 2.4);
+        // t1_r.setAttribute('x2', t1Center.x + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
+        // t1_r.setAttribute('x1', contDivCenter.x  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
+        // t1_r.setAttribute('y2', t1Center.y + (t1pos.height * offsetHeight/2 + 10 * offsetHeight));
+        // t1_r.setAttribute('y1', contDivCenter.y - (contDivPos.height * offsetHeight/2 - 10 * offsetHeight) - 2.4);
+        // console.log(t1_r);
+
+        // t2_r.setAttribute('x2', t2Center.x - (t2pos.width * offsetWidth/2 - 10 * offsetWidth));
+        // t2_r.setAttribute('x1', contDivCenter.x + (contDivPos.width * offsetWidth/2 - 10 * offsetWidth) - 2.4);
+        // t2_r.setAttribute('y2', t2Center.y - (t2pos.height * offsetHeight/2 - 10 * offsetHeight));
+        // t2_r.setAttribute('y1', contDivCenter.y + (contDivPos.height * offsetHeight/2 + 10 * offsetHeight) - 2.4);
+        // console.log(t2_r);
+
+        // if (this.card1 == 1) {
+        //     let dblLine = document.getElementById(this.t1 + "-" + this.relation + "2");
+        //     dblLine.setAttribute('x2', t1Center.x + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
+        //     dblLine.setAttribute('x1', contDivCenter.x  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
+        //     dblLine.setAttribute('y2', t2Center.y - (t2pos.height * offsetHeight/2 - 20 * offsetWidth));
+        //     dblLine.setAttribute('y1', contDivCenter.y + (contDivPos.height * offsetHeight/2 + 20 * offsetWidth) - 2.4);
+        // }
+
+        t1_r.setAttribute('x2', t1Center.x);// + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
+        t1_r.setAttribute('x1', contDivCenter.x - 2.4);//  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
+        t1_r.setAttribute('y2', t1Center.y);// + (t1pos.height * offsetHeight/2 + 10 * offsetHeight));
+        t1_r.setAttribute('y1', contDivCenter.y - 2.4);// - (contDivPos.height * offsetHeight/2 - 10 * offsetHeight) - 2.4);
         console.log(t1_r);
 
-        t2_r.setAttribute('x2', t2Center.x - (t2pos.width * offsetWidth/2 - 10 * offsetWidth));
-        t2_r.setAttribute('x1', contDivCenter.x + (contDivPos.width * offsetWidth/2 - 10 * offsetWidth) - 2.4);
-        t2_r.setAttribute('y2', t2Center.y - (t2pos.height * offsetHeight/2 - 10 * offsetHeight));
-        t2_r.setAttribute('y1', contDivCenter.y + (contDivPos.height * offsetHeight/2 + 10 * offsetHeight) - 2.4);
+        t2_r.setAttribute('x2', t2Center.x);// - (t2pos.width * offsetWidth/2 - 10 * offsetWidth));
+        t2_r.setAttribute('x1', contDivCenter.x - 2.4);// + (contDivPos.width * offsetWidth/2 - 10 * offsetWidth) - 2.4);
+        t2_r.setAttribute('y2', t2Center.y);// - (t2pos.height * offsetHeight/2 - 10 * offsetHeight));
+        t2_r.setAttribute('y1', contDivCenter.y - 2.4); // + (contDivPos.height * offsetHeight/2 + 10 * offsetHeight) - 2.4);
         console.log(t2_r);
 
+        if (this.card1 == 1) {
+            let dblLine = document.getElementById(this.t1 + "-" + this.relation + "2");
+            dblLine.setAttribute('x2', t1Center.x + 5);// + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
+            dblLine.setAttribute('x1', contDivCenter.x + 5 - 2.4);//  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
+            dblLine.setAttribute('y2', t1Center.y + 5); // - (t2pos.height * offsetHeight/2 - 20 * offsetWidth));
+            dblLine.setAttribute('y1', contDivCenter.y + 5 - 2.4);// + (contDivPos.height * offsetHeight/2 + 20 * offsetWidth) - 2.4);
+            console.log(dblLine);
+        }
+
         if (this.card2 == 1) {
-            console.log("hello");
-            let svg = document.getElementById("svg-container");
-            let dblLine = document.createElement("line");
-            dblLine.setAttribute('x2', t2Center.x - (t2pos.width * offsetWidth/2 - 20 * offsetHeight));
-            dblLine.setAttribute('x1', contDivCenter.x + (contDivPos.width * offsetWidth/2 - 20 * offsetHeight) - 2.4);
-            dblLine.setAttribute('y2', t2Center.y - (t2pos.height * offsetHeight/2 - 20 * offsetWidth));
-            dblLine.setAttribute('y1', contDivCenter.y + (contDivPos.height * offsetHeight/2 + 20 * offsetWidth) - 2.4);
-            dblLine.className = "solid-stroke";
-            svg.appendChild(dblLine);
-            console.log(svg);
+            let dblLine = document.getElementById(this.t2 + "-" + this.relation + "2");
+            dblLine.setAttribute('x2', t2Center.x - 5);// + (t1pos.width * offsetWidth/2 + 10 * offsetWidth));
+            dblLine.setAttribute('x1', contDivCenter.x - 5 - 2.4);//  - (contDivPos.width * offsetWidth/2 - 20 * offsetWidth) - 2.4);
+            dblLine.setAttribute('y2', t2Center.y - 5); // - (t2pos.height * offsetHeight/2 - 20 * offsetWidth));
+            dblLine.setAttribute('y1', contDivCenter.y - 5 - 2.4);// + (contDivPos.height * offsetHeight/2 + 20 * offsetWidth) - 2.4);
+            console.log(dblLine);
         }
     }
 }
