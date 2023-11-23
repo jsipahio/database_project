@@ -9,9 +9,10 @@
         <table id="Animal" class="entity-set"></table>
         <table id="Shelter" class="entity-set"></table>
         <table id="Adopter" class="entity-set"></table>
+        <table id="User" class="entity-set"></table>
         <table id="Adoption_Details" class="entity-set" style="height: 200px;"></table>
         <div class="relation" id="houses_animal-container"><div class="relation-text" id="houses_animal"></div></div>
-        <!-- <div class="relation" id="adopts_animal-container"><div class="relation-text" id="adopts_animal"></div></div> -->
+        <div class="relation" id="shelter_user-container"><div class="relation-text" id="shelter_user"></div></div>
         <div class="relation" id="animal_adoption-container"><div class="relation-text" id="animal_adoption"></div></div>
         <div class="relation" id="shelter_adoption-container"><div class="relation-text" id="shelter_adoption"></div></div>
         <div class="relation" id="adopter_adoption-container"><div class="relation-text" id="adopter_adoption"></div></div>
@@ -43,6 +44,8 @@
             <line id="Adopter-adopter_adoption" class="solid-stroke"></line>
             <line id="Adoption_Details-adopter_adoption2" class="double-stroke"></line>
             <line id="Adoption_Details-adopter_adoption" class="double-stroke"></line>
+            <line id="User-shelter_user" class="solid-stroke"></line>
+            <line id="Shelter-shelter_user" class="solid-stroke"></line>
         </svg>
         
         <script>
@@ -69,20 +72,31 @@
             adoption_details.add_pk("adoption_id");
             adoption_details.add_attr("adopiton_date");
 
-            let animal_adoption = new Relation(adoption_details.name, 0, animal.name, 0, "animal_adoption");
-            let shelter_adoption = new Relation(adoption_details.name, 0, shelter.name, 0,"shelter_adoption");
-            let adopter_adoption = new Relation(adoption_details.name, 0, adopter.name, 0, "adopter_adoption");
+            let animal_adoption = new Relation(adoption_details.name, 1, animal.name, 0, "animal_adoption");
+            let shelter_adoption = new Relation(adoption_details.name, 1, shelter.name, 0,"shelter_adoption");
+            let adopter_adoption = new Relation(adoption_details.name, 1, adopter.name, 0, "adopter_adoption");
+
+            let user = new EntitySet("User");
+            user.add_pk("username");
+            user.add_attr("password");
+            user.add_attr("role");
+            user.add_attr("name");
+            user.add_attr("email_address");
+
+            let shelter_user = new Relation(shelter.name, 0, user.name, 0, "shelter_user");
 
             shelter.draw(1350, 50);
             animal.draw(750, 50);
             adoption_details.draw(750, 950);
             adopter.draw(1350, 837.5)
+            user.draw(1950, 50);
 
             houses_animal.draw();
             //adopts_animal.draw();
             animal_adoption.draw();
             shelter_adoption.draw();
             adopter_adoption.draw();
+            shelter_user.draw();
         </script>
     </body>
 </html>
