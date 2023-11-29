@@ -12,7 +12,8 @@ create table Shelter(
     [state]         varchar(2),
     zip             varchar(5),
     phone_num       varchar(10),
-    email_address   varchar(10)
+    email_address   varchar(10),
+	[description]	varchar(500)
 )
 go
 
@@ -22,11 +23,13 @@ create table Animal(
     [type]          varchar(50),
     breed           varchar(50),
     gender          varchar(1),
+	age				int,
     date_received   datetime,
     is_vaxed        bit,
     is_fixed        bit,
-    [fees]          decimal(4, 2),
-    shelter_id      varchar(6) foreign key references Shelter(shelter_id)
+    [fees]          decimal(6, 2),
+    shelter_id      varchar(6) foreign key references Shelter(shelter_id),
+	[description]	varchar(500)
 )
 go
 
