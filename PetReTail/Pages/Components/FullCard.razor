@@ -1,0 +1,31 @@
+@page "/animal/{id}"
+
+<div class="row">
+    <div class="col-5">
+        <img src="images/butters.jpg" class="img-fluid" />
+    </div>
+    <div class="col-7">
+        <h3>@_animal.Name</h3>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Breed: </strong>@_animal.Breed</li>
+            <li class="list-group-item"><strong>Age: </strong>@_animal.Age</li>
+            <li class="list-group-item"><strong>Gender: </strong>@_animal.Gender</li>
+            <li class="list-group-item"><strong>Fee: </strong>@_animal.Fee</li>
+            <li class="list-group-item"><strong>Vaccinations: </strong>@_animal.IsVaxed</li>
+            <li class="list-group-item"><strong>Spayed/Neutered: </strong>@_animal.IsFixed</li>
+        </ul>
+        <div class="row">
+            <div class="col">
+                <button role="button" class="button">Adopt</button>
+            </div>
+            <div class="col">
+                <button role="button" class="button">Shelter Info</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string ID { get; set; }
+}
