@@ -1,0 +1,75 @@
+@page "/Admin"
+
+@if(!_loggedIn)
+{
+    <form class="form" @onsubmit="TryLogin" @formname="loginform">
+        <div class="mb-3">
+            <InputText @bind-Value="_username" />
+            <InputText @bind-Value="_password" />
+        </div>
+    </form>
+}
+else
+{
+    @if(_shelters == null)
+    {
+        <em>No animals found for your shelter</em>
+    }
+    else
+    {
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Breed</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Vaccine Status</th>
+                <th>Spayed/Neutured</th>
+            </thead>
+            <tbody>
+            @foreach(ShelterModel shelter in _shelters)
+            {
+                <td>@shelter.ID</td>
+                <td>@shelter.Name</td>
+                <td>@shelter.StreetAddress</td>
+                <td>@shelter.City</td>
+                <td>@shelter.State</td>
+                <td>@shelter.Zip</td>
+                <td>@shelter.Phone</td>
+                <td>@shelter.Email</td>
+
+            }
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Breed</th>
+                <th>Gender</th>
+                <th>Age</th>
+                <th>Vaccine Status</th>
+                <th>Spayed/Neutured</th>
+            </thead>
+            <tbody>
+            @foreach(List<AnimalModel> animalList in _animals)
+            {
+                foreach(AnimalModel animal in animalList)
+                {
+                    <td>@animal.ID</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Type</td>
+                    <td>@animal.Breed</td>
+                    <td>@animal.Gender</td>
+                    <td>@animal.Age</td>
+                    <td>@animal.IsVaxed</td>
+                    <td>@animal.IsFixed</td>
+                }
+            }
+            </tbody>
+        </table>
+    }
+}

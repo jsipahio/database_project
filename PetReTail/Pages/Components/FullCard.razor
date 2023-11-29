@@ -2,24 +2,66 @@
 
 <div class="row">
     <div class="col-5">
-        <img src="images/butters.jpg" class="img-fluid" />
+        <img src="@_imgPath" class="img-fluid" />
     </div>
     <div class="col-7">
         <h3>@_animal.Name</h3>
         <ul class="list-group">
             <li class="list-group-item"><strong>Breed: </strong>@_animal.Breed</li>
-            <li class="list-group-item"><strong>Age: </strong>@_animal.Age</li>
-            <li class="list-group-item"><strong>Gender: </strong>@_animal.Gender</li>
-            <li class="list-group-item"><strong>Fee: </strong>@_animal.Fee</li>
-            <li class="list-group-item"><strong>Vaccinations: </strong>@_animal.IsVaxed</li>
-            <li class="list-group-item"><strong>Spayed/Neutered: </strong>@_animal.IsFixed</li>
+            <li class="list-group-item"><strong>Age: </strong>
+            @switch (_animal.Age)
+            {
+                case 0:
+                    <span>Young</span>
+                    break;
+                case 1:
+                    <span>Adult</span>
+                    break;
+                case 2:
+                    <span>Senior</span>
+                    break;
+                default:
+                    <span>Unknown</span>
+                    break;
+            }
+            </li>
+            <li class="list-group-item"><strong>Gender: </strong>
+            @if(_animal.Gender == "M")
+            {
+                <span>Male</span>
+            }
+            else
+            {
+                <span>Female</span>
+            }
+            </li>
+            <li class="list-group-item"><strong>Fee: </strong>$@_animal.Fee</li>
+            <li class="list-group-item"><strong>Vaccinations: </strong>
+            @if(_animal.IsVaxed)
+            {
+                <span>Up to date</span>
+            }
+            else
+            {
+                <span>Not up to date</span>
+            }
+            </li>
+            <li class="list-group-item"><strong>Spayed/Neutered: </strong>
+            @if(_animal.IsFixed)
+            {
+                <span>Yes</span>
+            }
+            else{
+                <span>No</span>
+            }
+            </li>
         </ul>
         <div class="row">
-            <div class="col">
-                <button role="button" class="button">Adopt</button>
+            <div class="col text-center">
+                <NavLink href="#" class="btn btn-success">Adopt</NavLink>
             </div>
-            <div class="col">
-                <button role="button" class="button">Shelter Info</button>
+            <div class="col text-center">
+                <NavLink href="#" class="btn btn-info">Shelter Info</NavLink>
             </div>
         </div>
     </div>
