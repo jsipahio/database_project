@@ -36,3 +36,4 @@ C:\Users\jsipa\Documents\Database\repo\database_project\PetReTail\bin\Debug\net6
 C:\Users\jsipa\Documents\Database\repo\database_project\PetReTail\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\jsipa\Documents\Database\repo\database_project\PetReTail\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\jsipa\Documents\Database\repo\database_project\PetReTail\obj\Debug\net6.0\PetReTail.csproj.CopyComplete
+C:\Users\jsipa\Documents\Database\repo\database_project\PetReTail\bin\Debug\net6.0\System.Security.Permissions.dll

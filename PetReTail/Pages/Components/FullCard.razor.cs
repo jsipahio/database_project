@@ -6,27 +6,17 @@ namespace PetReTail.Pages.Components
 {
     public partial class FullCard
     {
-        // [Parameter]
-        // public string ID { get; set; }
-        private AnimalModel _animal;// = new AnimalModel(){
-        //                         ID = Convert.ToInt32("1234"),
-        //                         Name = "Butters",
-        //                         Type = "Cat",
-        //                         Breed = "Big Chungus",
-        //                         Gender = "Male",
-        //                         Age = 5,
-        //                         IsVaxed = true,
-        //                         IsFixed = true,
-        //                         Fee = 100.00M,
-        //                         ShelterID = "Shltr1"
-        // };
-        private string _imgPath;// = "images/butters.jpg";
+        private AnimalModel _animal;
+        private string _imgPath;
+        private string _shelterPath;
         //wut frl
         protected override void OnInitialized()
         {
             try
             {
-                //_animal = DBMgr.GetSingleAnimal(ID);
+                _animal = DBMgr.GetSingleAnimal(ID);
+                _imgPath = "images/" + _animal.ID + ".png";
+                _shelterPath = "shelters/" + _animal.ShelterID;
             }
             catch (Exception ex)
             {
@@ -40,22 +30,9 @@ namespace PetReTail.Pages.Components
             {
                 if (firstRender)
                 {
-                   _animal = new AnimalModel(){
-                                ID = Convert.ToInt32("1234"),
-                                Name = "Butters",
-                                Type = "Cat",
-                                Breed = "Big Chungus",
-                                Gender = "Male",
-                                Age = 5,
-                                IsVaxed = true,
-                                IsFixed = true,
-                                Fee = 100.00M,
-                                ShelterID = "Shltr1"
-                    };
-                    _imgPath = "images/butters.jpg";
                 }
-                _animal = DBMgr.GetSingleAnimal(ID);
-                _imgPath = "images/" + _animal.ID + ".png";
+                //_animal = DBMgr.GetSingleAnimal(ID);
+                //_imgPath = "images/" + _animal.ID + ".png";
                 base.OnAfterRender(firstRender);
             }
             catch (Exception ex)

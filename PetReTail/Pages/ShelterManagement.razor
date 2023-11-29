@@ -32,14 +32,16 @@ else
             <tbody>
             @foreach(AnimalModel animal in _animals)
             {
-                <td>@animal.ID</td>
-                <td>@animal.Name</td>
-                <td>@animal.Type</td>
-                <td>@animal.Breed</td>
-                <td>@animal.Gender</td>
-                <td>@animal.Age</td>
-                <td>@animal.IsVaxed</td>
-                <td>@animal.IsFixed</td>
+                <tr>
+                    <td>@animal.ID</td>
+                    <td>@animal.Name</td>
+                    <td>@animal.Type</td>
+                    <td>@animal.Breed</td>
+                    <td>@animal.Gender</td>
+                    <td>@animal.Age</td>
+                    <td>@animal.IsVaxed</td>
+                    <td>@animal.IsFixed</td>
+                </tr>
             }
             </tbody>
         </table>
