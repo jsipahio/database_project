@@ -1,13 +1,18 @@
-@page "/Admin"
+@page "/admin"
 
-@if(!_loggedIn)
+@if(_loggedIn)
 {
-    <form class="form" @onsubmit="TryLogin" @formname="loginform">
-        <div class="mb-3">
-            <InputText @bind-Value="_username" />
-            <InputText @bind-Value="_password" />
+    <div class="mb-3">
+            <label>Username: </label>
+            <input @bind-value="@_username" placeholder="username"/>
         </div>
-    </form>
+        <div class="mb-3">
+            <label>Password: </label>
+            <input @bind-value="@_password" type="password" placeholder="password"/>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">Log In</button>
+        </div>
 }
 else
 {
@@ -17,23 +22,47 @@ else
     }
     else
     {
-        <table>
+        @if(_showShelterForm)
+        {
+            <form class="form" @onsubmit="@ConfirmEdit">
+                <div class="row">
+                    <div class="col">Name: <input @bind-value="@_editShelter.Name"/></div>
+                    <div class="col">Phone: <input @bind-value="@_editShelter.Phone"/></div>
+                    <div class="col">Email: <input @bind-value="@_editShelter.Email"/></div>
+                </div>
+                <div class="row">
+                    <div class="col">Street Address: <input @bind-value="@_editShelter.StreetAddress" /></div>
+                    <div class="col-4">City: <input @bind-value="@_editShelter.City" /></div>
+                    <div class="col-1">State: <input  @bind-value="@_editShelter.State"/></div>
+                    <div class="col-1">Zip: <input  @bind-value="@_editShelter.Zip"/></div>
+                </div>
+                <div class="row">
+                    <div class="col"><textarea @bind="@_editShelter.Description" /></div>
+                    <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                </div>
+            </form>
+        }
+        <table class="table">
             <thead>
                 <tr>
+                    <th colspan="2">Actions</th>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Type</th>
-                    <th>Breed</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Vaccine Status</th>
-                    <th>Spayed/Neutured</th>
+                    <th>Street Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
             @foreach(ShelterModel shelter in _shelters)
             {
                 <tr>
+                    <td><button class="btn btn-info" type="button" @onclick="@(() => EditShelter(@shelter.ID))">Edit</button></td>
+                    <td><button class="btn btn-danger" type="button" @onclick="@(() => DeleteShelter(@shelter.ID))">Remove</button></td>
                     <td>@shelter.ID</td>
                     <td>@shelter.Name</td>
                     <td>@shelter.StreetAddress</td>
@@ -47,9 +76,24 @@ else
             }
             </tbody>
         </table>
-        <table>
+        @if(_showForm)
+        {
+            <form class="form" @onsubmit="@ConfirmEdit">
+                <div class="row">
+                    <div class="col">Name: <input @bind-value="@_editAnimal.Name"/></div>
+                    <div class="col">Breed: <input @bind-value="@_editAnimal.Breed" /></div>
+                    <div class="col">Age: <input @bind-value="@_editAnimal.Age" /></div>
+                    <div class="col">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
+                    <div class="col">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+                    <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                </div>
+            </form>
+        }
+        <table class="table">
             <thead>
                 <tr>
+                    <th colspan="2">Actions</th>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
@@ -66,6 +110,8 @@ else
                 foreach(AnimalModel animal in animalList)
                 {
                     <tr>
+                        <td><button class="btn btn-info" type="button" @onclick="@(() => EditAnimal(@animal.ID))">Edit</button></td>
+                        <td><button class="btn btn-danger" type="button" @onclick="@(() => DeleteAnimal(@animal.ID))">Remove</button></td>
                         <td>@animal.ID</td>
                         <td>@animal.Name</td>
                         <td>@animal.Type</td>

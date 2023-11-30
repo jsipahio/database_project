@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using PetReTail.Pages.Components
+@using PetReTail.Data;
 
 <PageTitle>Pet ReTail Home</PageTitle>
 
@@ -7,4 +8,15 @@
 
 Welcome to your new app.
 
-<PreviewCard />
+<div class="card-group">
+    @foreach(AnimalModel animal in _animals)
+    {
+        
+        <PreviewCard Animal="@animal"/>
+    }
+</div>
+
+
+<div class="alert-danger">
+    @errmsg
+</div>

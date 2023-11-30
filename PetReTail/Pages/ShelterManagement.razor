@@ -1,13 +1,23 @@
-@page "/ShelterManagement"
+@page "/sheltermanagement"
 
-@if(!_loggedIn)
+@if(_loggedIn)
 {
-    <form class="form" @onsubmit="TryLogin" @formname="loginform">
+    <form class="form" @onsubmit="@TryLogin">
         <div class="mb-3">
-            <InputText @bind-Value="_username" />
-            <InputText @bind-Value="_password" />
+            <label>Username: </label>
+            <input @bind-value="@_username" placeholder="username"/>
+        </div>
+        <div class="mb-3">
+            <label>Password: </label>
+            <input @bind-value="@_password" type="password" placeholder="password"/>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">Log In</button>
         </div>
     </form>
+    @_username
+    <br />
+    @_password
 }
 else
 {
@@ -17,9 +27,23 @@ else
     }
     else
     {
-        
-        <table>
+        @if(_showForm)
+        {
+            <form class="form" @onsubmit="@ConfirmEdit">
+                <div class="row">
+                    <div class="col">Name: <input @bind-value="@_editAnimal.Name"/></div>
+                    <div class="col">Breed: <input @bind-value="@_editAnimal.Breed" /></div>
+                    <div class="col">Age: <input @bind-value="@_editAnimal.Age" /></div>
+                    <div class="col">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
+                    <div class="col">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+                    <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                </div>
+            </form>
+        }
+        <table class="table">
             <thead>
+                <th colspan="2">Actions</th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Type</th>
@@ -33,17 +57,46 @@ else
             @foreach(AnimalModel animal in _animals)
             {
                 <tr>
+                    <td><button class="btn btn-info" type="button" @onclick="@(() => EditAnimal(@animal.ID))">Edit</button></td>
+                    <td><button class="btn btn-danger" type="button" @onclick="@(() => DeleteAnimal(@animal.ID))">Remove</button></td>
                     <td>@animal.ID</td>
                     <td>@animal.Name</td>
                     <td>@animal.Type</td>
                     <td>@animal.Breed</td>
                     <td>@animal.Gender</td>
-                    <td>@animal.Age</td>
+                    <td>
+                    @switch(animal.Age)
+                    {
+                        case 0:
+                            <span>Young</span>
+                            break;
+                        case 1:
+                            <span>Adult</span>
+                            break;
+                        case 2:
+                            <span>Senior</span>
+                            break;
+                        default:
+                            <span>Unknown</span>
+                            break;
+                    }
+                    </td>
                     <td>@animal.IsVaxed</td>
                     <td>@animal.IsFixed</td>
                 </tr>
             }
             </tbody>
         </table>
+        <li class="list-group">
+            <ul class="list-group-item">@_shelter.Name</ul>
+            <ul class="list-group-item">@_shelter.ID</ul>
+            <ul class="list-group-item">@_shelter.StreetAddress</ul>
+            <ul class="list-group-item">@_shelter.City</ul>
+            <ul class="list-group-item">@_shelter.State</ul>
+            <ul class="list-group-item">@_shelter.Zip</ul>
+            <ul class="list-group-item">@_shelter.Phone</ul> 
+            <ul class="list-group-item">@_shelter.Email</ul>
+            <ul class="list-group-item">@_shelter.Description</ul>   
+        </li>
     }
 }

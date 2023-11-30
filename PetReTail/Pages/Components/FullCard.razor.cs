@@ -16,7 +16,7 @@ namespace PetReTail.Pages.Components
             {
                 _animal = DBMgr.GetSingleAnimal(ID);
                 _imgPath = "images/" + _animal.ID + ".png";
-                _shelterPath = "shelters/" + _animal.ShelterID;
+                _shelterPath = "shelter/" + _animal.ShelterID;
             }
             catch (Exception ex)
             {

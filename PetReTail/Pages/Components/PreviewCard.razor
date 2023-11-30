@@ -1,8 +1,45 @@
+@using PetReTail.Data;
+
 <div class="card" style="width: 18rem;">
-  <img src="images/3.png" class="card-img-top" alt="...">
+  <img src="@_imgPath" class="card-img-top" alt="..." style="height: 18rem; width: auto;">
   <div class="card-body">
-    <h5 class="card-title">Butters</h5>
-    <p class="card-text">Look at how cute this chunky cat is.</p>
-    <NavLink href="animal/2" class="btn btn-primary">More about Butters</NavLink>
+    <h5 class="card-title">@Animal.Name</h5>
+    <ul class="list-group">
+      @*<li class="list-group-item">@Animal.Type</li>*@
+      <li class="list-group-item">@Animal.Breed</li>
+      <li class="list-group-item">
+            @switch (Animal.Age)
+            {
+                case 0:
+                    <span>Young</span>
+                    break;
+                case 1:
+                    <span>Adult</span>
+                    break;
+                case 2:
+                    <span>Senior</span>
+                    break;
+                default:
+                    <span>Unknown</span>
+                    break;
+            }
+            </li>
+    </ul>
+    
+  </div>
+  <div class="card-footer">
+    <NavLink href="@_href" class="btn btn-primary">More about @Animal.Name</NavLink>
   </div>
 </div>
+
+@code{
+  [Parameter]
+  public AnimalModel Animal { get; set; }
+  private string _imgPath;
+  private string _href;
+  protected override void OnInitialized() 
+  {
+    _imgPath = "images/" + Animal.ID + ".png";
+    _href = "animal/" + Animal.ID;
+  }
+}

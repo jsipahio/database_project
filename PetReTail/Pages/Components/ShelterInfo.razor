@@ -1,9 +1,35 @@
 @page "/shelter/{id}"
 
+<div class="row">
+    <h2 class="text-center">@_shelter.Name</h2>
+    <div class="col-7">
 
+        <h3><strong>About Us</strong></h3>
+        <p>@_shelter.Description</p>
+        
+        <br>
+    
+        <div class="row">
+            <div class="col-3">
+                <h3><strong>Contact Us</strong></h3>
+                <div><strong>Phone: </strong>@_shelter.Phone</div>
+                <div><strong>Email: </strong>@_shelter.Email</div>
+            </div>
+            <div class="col-4">
+                <h3><strong>Visit Us</strong></h3>
+                <div>@_shelter.StreetAddress</div>
+                <div>@_shelter.City, @_shelter.State</div>
+                <div>@_shelter.Zip</div>
+            </div>
+            <div class="col-6"></div>
+        </div>
+    </div>
+    <div class="col-5">
+        <!-- <img src="@_imgPath" class="img-fluid" /> -->
+    </div>
+</div>
 
 @code {
     [Parameter]
     public string ID { get; set; }
-    // not swag fr fr no cap
 }

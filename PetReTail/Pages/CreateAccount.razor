@@ -1,0 +1,41 @@
+@page "/createaccount"
+
+@if(_success)
+{
+    <div class="alert-info">@_message</div>
+}
+
+<form @onsubmit="@DBCreateAccount" class="form">
+    <div class="mb-3">
+        <label>Username: </label>
+        <input @bind-value="@_username" placeholder="username"/>
+    </div>
+    <div class="mb-3">
+        <label>Password: </label>
+        <input @bind-value="@_password" type="password" placeholder="password"/>
+    </div>
+    <div class="mb-3">
+        <label>First Name: </label>
+        <input @bind-value="@_first" placeholder="John"/>
+    </div>
+    <div class="mb-3">
+        <label>Last Name: </label>
+        <input @bind-value="@_last" placeholder="Doe"/>
+    </div>
+    <div class="mb-3">
+        <label>Email: </label>
+        <input @bind-value="@_email" placeholder="email@email.com" type="email" />
+    </div>
+    <div class="mb-3">
+        <label>Shelter: </label>
+        <select @bind="@_shelter">
+            @foreach(ShelterModel shelter in _shelters)
+            {
+                <option value="@shelter.ID">@shelter.Name</option> 
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Log In</button>
+    </div>
+</form>
