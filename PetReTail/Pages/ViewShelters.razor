@@ -1,0 +1,14 @@
+@page "/viewshelters"
+@using PetReTail.Pages.Components
+
+<PageTitle>View Shelters</PageTitle>
+
+<ul class="list-group">
+    @foreach (ShelterModel shelter in _shelters)
+    {
+        string href = "shelter/" + shelter.ID;
+        <li class="list-group-item">
+            <NavLink href="@href" class="nav-link text-dark">@shelter.Name</NavLink>
+        </li>
+    }
+</ul>

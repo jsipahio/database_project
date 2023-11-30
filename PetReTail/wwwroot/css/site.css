@@ -66,3 +66,14 @@ a, .btn-link {
 .bg-pink {
     background-color: deeppink;
 }
+
+.background {
+    background-image: url("../images/background.jpg");
+    background-size: cover;
+    background-position: top;
+}
+
+.cover {
+    color: black;
+    font-weight: bold;
+}

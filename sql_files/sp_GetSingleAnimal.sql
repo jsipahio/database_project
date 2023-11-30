@@ -29,6 +29,7 @@ alter PROCEDURE GetSingleAnimal
     ,@p_is_fixed    varchar(10) out
     ,@p_fees        decimal(6,2) out
     ,@p_shelter_id  varchar(6) out
+    ,@p_description varchar(500) out
     ,@p_status      int OUT
     ,@p_errmsg      varchar(500) out
 AS
@@ -49,6 +50,7 @@ BEGIN
         ,@p_is_fixed = is_fixed
         ,@p_fees = fees 
         ,@p_shelter_id = shelter_id 
+        ,@p_description = [description]
     from Animal
     where animal_id = @p_animal_id
 
@@ -83,6 +85,7 @@ BEGIN
         ,@p_is_fixed   
         ,@p_fees       
         ,@p_shelter_id 
+        ,@p_description
         ,@p_status     
         ,@p_errmsg     
 END

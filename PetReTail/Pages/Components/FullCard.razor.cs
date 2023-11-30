@@ -9,6 +9,7 @@ namespace PetReTail.Pages.Components
         private AnimalModel _animal;
         private string _imgPath;
         private string _shelterPath;
+        private string _adoptPath;
         //wut frl
         protected override void OnInitialized()
         {
@@ -17,6 +18,7 @@ namespace PetReTail.Pages.Components
                 _animal = DBMgr.GetSingleAnimal(ID);
                 _imgPath = "images/" + _animal.ID + ".png";
                 _shelterPath = "shelter/" + _animal.ShelterID;
+                _adoptPath = "adopt/" + _animal.ID;
             }
             catch (Exception ex)
             {

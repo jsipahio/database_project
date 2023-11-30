@@ -13,5 +13,6 @@ namespace PetReTail.Data
         public bool IsFixed { get; set; }
         public Decimal Fee { get; set; }
         public string ShelterID { get; set; }
+        public string Description { get; set; }
     }
 }

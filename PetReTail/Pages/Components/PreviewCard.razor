@@ -3,7 +3,7 @@
 <div class="card" style="width: 18rem;">
   <img src="@_imgPath" class="card-img-top" alt="..." style="height: 18rem; width: auto;">
   <div class="card-body">
-    <h5 class="card-title">@Animal.Name</h5>
+    <h5 class="card-title text-center"><strong>@Animal.Name</strong></h5>
     <ul class="list-group">
       @*<li class="list-group-item">@Animal.Type</li>*@
       <li class="list-group-item">@Animal.Breed</li>
@@ -27,7 +27,7 @@
     </ul>
     
   </div>
-  <div class="card-footer">
+  <div class="card-footer d-flex justify-content-center">
     <NavLink href="@_href" class="btn btn-primary">More about @Animal.Name</NavLink>
   </div>
 </div>
@@ -39,7 +39,14 @@
   private string _href;
   protected override void OnInitialized() 
   {
+    DateTime DateTimeNow = DateTime.Now;
+    _imgPath = "images/" + Animal.ID + ".png?DummyId=" + DateTimeNow.Ticks;
+    _href = "animal/" + Animal.ID;
+  }
+  protected override void OnAfterRender(bool firstRender)
+  {
     _imgPath = "images/" + Animal.ID + ".png";
     _href = "animal/" + Animal.ID;
+      base.OnAfterRender(firstRender);
   }
 }

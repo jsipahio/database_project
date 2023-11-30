@@ -7,13 +7,13 @@ namespace PetReTail.Pages.Components
     public partial class ShelterInfo
     {
         private ShelterModel _shelter;
-        //private string _imgPath;
+        private string _imgPath;
         protected override void OnInitialized()
         {
             try
             {
                  _shelter = DBMgr.GetSingleShelter(ID);
-                // _imgPath = "images/" + _animal.ID + ".png";
+                 _imgPath = "images/" + _shelter.ID + ".png";
             }
             catch (Exception ex)
             {
@@ -28,8 +28,6 @@ namespace PetReTail.Pages.Components
                 if (firstRender)
                 {
                 }
-                //_animal = DBMgr.GetSingleAnimal(ID);
-                //_imgPath = "images/" + _animal.ID + ".png";
                 base.OnAfterRender(firstRender);
             }
             catch (Exception ex)

@@ -1,0 +1,41 @@
+@page "/newuser"
+
+<form class="form" @onsubmit="AddUser">
+    <div class="row">
+        <div class="col form-group">
+            Username: <input @bind-value="@_userModel.UserName" placeholder="username" class="form-control" />
+        </div>
+        <div class="col form-group">
+            Password: <input @bind-value="@_password" placeholder="password" class="form-control" type="password" />            
+        </div>
+        <div class="col form-group">
+            Email: <input @bind-value="@_userModel.Email" placeholder="example@email.com" class="form-control" type="email"/>            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col form-group">
+            First Name: <input @bind-value="@_userModel.FirstName" placeholder="John" class="form-control" />
+        </div>
+        <div class="col form-group">
+            Last Name: <input @bind-value="@_userModel.LastName" placeholder="Doe" class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 form-group">
+            Select Shelter: <select @bind="@_userModel.ShelterID" class="form-control">
+                @foreach (ShelterModel shelter in _shelters)
+                {
+                    <option value="@shelter.ID">
+                        @shelter.Name
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-2 form-group">
+            <button type="submit" class="btn btn-success">Create Account</button>
+        </div>
+        <div class="col-2 form-group">
+            <button type="clear" class="btn btn-warning">Clear</button>
+        </div>
+    </div>
+</form>

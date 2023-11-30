@@ -1,0 +1,47 @@
+@page "/Adopt/{AnimalID}"
+
+<PageTitle>Adopt</PageTitle>
+
+<form @onsubmit="RequestAdopt" class="form">
+    <div class="row">
+        <div class="col form-group">
+            First Name: <input @bind-value="@_adopter.First" class="form-control" placeholder="John"/>
+        </div>
+        <div class="col form-group">
+            Last Name: <input @bind-value="@_adopter.Last" class="form-control" placeholder="Doe"/>
+        </div>
+        <div class="col form-group">
+            Phone: <input @bind-value="@_adopter.Phone" class="form-control" placeholder="2345678910"/>
+        </div>
+        <div class="col form-group">
+            Email: <input @bind-value="@_adopter.Email" class="form-control" placeholder="example@email.com"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col form-group">
+            Street Address: <input @bind-value="@_adopter.StreetAddress" class="form-control" placeholder="123 Main St"/>
+        </div>
+        <div class="col form-group">
+            City: <input @bind-value="@_adopter.City" class="form-control" placeholder="Somewhere"/>
+        </div>
+        <div class="col form-group">
+            State: <input @bind-value="@_adopter.State" class="form-control" placeholder="OH"/>
+        </div>
+        <div class="col form-group">
+            Zip: <input @bind-value="@_adopter.Zip" class="form-control" placeholder="12345"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1 form-group">
+            <button type="submit" class="btn btn-success">Adopt</button>
+        </div>
+        <div class="col-1 form-group">
+            <button type="button" class="btn btn-info">More Info</button>
+        </div>
+    </div>
+</form>
+
+@code {
+    [Parameter]
+    public string AnimalID { get; set; }
+}

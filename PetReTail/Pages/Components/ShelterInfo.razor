@@ -2,30 +2,51 @@
 
 <div class="row">
     <h2 class="text-center">@_shelter.Name</h2>
-    <div class="col-7">
 
-        <h3><strong>About Us</strong></h3>
-        <p>@_shelter.Description</p>
-        
+    <div class="col-2">
+    <div class="text-center">
         <br>
-    
-        <div class="row">
-            <div class="col-3">
-                <h3><strong>Contact Us</strong></h3>
-                <div><strong>Phone: </strong>@_shelter.Phone</div>
-                <div><strong>Email: </strong>@_shelter.Email</div>
-            </div>
-            <div class="col-4">
-                <h3><strong>Visit Us</strong></h3>
-                <div>@_shelter.StreetAddress</div>
-                <div>@_shelter.City, @_shelter.State</div>
-                <div>@_shelter.Zip</div>
-            </div>
-            <div class="col-6"></div>
-        </div>
+        
+        <h3><strong>Contact Us</strong></h3>
+        <div><strong>Phone: </strong>@_shelter.Phone</div>
+        <div><strong>Email: </strong>@_shelter.Email</div>
+
+        <br>
+        <br>
+
+        <h3><strong>Visit Us</strong></h3>
+
+        <div><strong>Hours of Operation:</strong></div>
+        <div>Monday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7am-9pm</div>
+        <div>Tuesday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7am-9pm</div>
+        <div>Wednesday:&nbsp;7am-9pm</div>
+        <div>Thursday:&nbsp;&nbsp;&nbsp;8am-10pm</div>
+        <div>Friday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8am-11pm</div>
+        <div>Saturday:&nbsp;&nbsp;&nbsp;8am-11pm</div>
+        <div>Sunday:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8am-9pm</div>
+
+        <hr>
+
+        <div>@_shelter.StreetAddress</div>
+        <div>@_shelter.City, @_shelter.State, @_shelter.Zip</div>
     </div>
+    </div>
+
+    <div class="col-1">
+    </div>
+
+    <div class="col-4">
+    <br>
+        <h3 class="text-center"><strong>About Us</strong></h3>
+        <p>@_shelter.Description</p>
+    </div>
+
+    <!-- <div class="col-1">
+    </div> -->
+
     <div class="col-5">
-        <!-- <img src="@_imgPath" class="img-fluid" /> -->
+        <br>
+        <img src="@_imgPath" class="img-fluid" />
     </div>
 </div>
 

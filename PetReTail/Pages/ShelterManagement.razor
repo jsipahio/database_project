@@ -1,26 +1,60 @@
 @page "/sheltermanagement"
 
-@if(_loggedIn)
+@if(!_loggedIn)
 {
-    <form class="form" @onsubmit="@TryLogin">
-        <div class="mb-3">
+    
+    <div class="d-flex justify-content-center">
+   <form class="form w-25 border border-dark rounded p-2" @onsubmit="@TryLogin">
+        <div class="mb-3 form-group">
             <label>Username: </label>
-            <input @bind-value="@_username" placeholder="username"/>
+            <input @bind-value="@_username" placeholder="username" class="form-control"/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 form-group">
             <label>Password: </label>
-            <input @bind-value="@_password" type="password" placeholder="password"/>
+            <input @bind-value="@_password" type="password" placeholder="password" class="form-control"/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 form-group d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Log In</button>
         </div>
     </form>
-    @_username
-    <br />
-    @_password
+    </div>
 }
 else
 {
+    <button class="btn btn-primary" @onclick="StartNewAnimal">Add Animal</button>
+    if(_showNewAnimalForm)
+    {
+        <form class="form" @onsubmit="@ConfirmNewAnimal">
+            <div class="row">
+                <div class="col form-group">Name: <input @bind-value="@_editAnimal.Name" class="form-control"/></div>
+                <div class="col form-group">Breed: <input @bind-value="@_editAnimal.Breed" class="form-control" /></div>
+                <div class="col form-group">Age: 
+                    <select @bind="@_editAnimal.Age" class="form-control">
+                        <option value="0">Young</option>
+                        <option value="1">Adult</option>
+                        <option value="2">Senior</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col form-group">Date Received: <input type="date" @bind-value="@_newAnimal.DateReceived" class="form-control"/></div>
+                <div class="col form-group">Gender: 
+                    <select @bind="@_newAnimal.Gender" class="form-control">
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="col form-group mt-auto">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
+                <div class="col form-group mt-auto">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+            </div>
+            <div class="row">
+                <div class="col form-group">Description: <textarea class="form-control" @bind="@_editAnimal.Description" /></div>
+                <div class="col-1 form-group mt-auto"><button class="btn btn-success mt-auto" type="submit">Confirm</button></div>
+                <div class="col-1 form-group mt-auto"><button class="btn btn-warning mt-auto" @onclick="@CancelNewAnimal" type="button">Cancel</button></div>
+            </div>
+        </form>
+    }
+    
     @if(_animals == null)
     {
         <em>No animals found for your shelter</em>
@@ -36,8 +70,11 @@ else
                     <div class="col">Age: <input @bind-value="@_editAnimal.Age" /></div>
                     <div class="col">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
                     <div class="col">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+                </div>
+                <div class="row">
+                    <div class="col">Description: <textarea class="form-control" @bind="@_editAnimal.Description" /></div>
                     <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
-                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit" type="button">Cancel</button></div>
                 </div>
             </form>
         }
@@ -52,6 +89,7 @@ else
                 <th>Age</th>
                 <th>Vaccine Status</th>
                 <th>Spayed/Neutured</th>
+                <th>Date Received</th>
             </thead>
             <tbody>
             @foreach(AnimalModel animal in _animals)
@@ -83,20 +121,32 @@ else
                     </td>
                     <td>@animal.IsVaxed</td>
                     <td>@animal.IsFixed</td>
+                    <td>@animal.DateReceived</td>
                 </tr>
             }
             </tbody>
         </table>
-        <li class="list-group">
-            <ul class="list-group-item">@_shelter.Name</ul>
-            <ul class="list-group-item">@_shelter.ID</ul>
-            <ul class="list-group-item">@_shelter.StreetAddress</ul>
-            <ul class="list-group-item">@_shelter.City</ul>
-            <ul class="list-group-item">@_shelter.State</ul>
-            <ul class="list-group-item">@_shelter.Zip</ul>
-            <ul class="list-group-item">@_shelter.Phone</ul> 
-            <ul class="list-group-item">@_shelter.Email</ul>
-            <ul class="list-group-item">@_shelter.Description</ul>   
-        </li>
+        <button @onclick="StartShelterEdit" class="btn btn-primary">Edit Shelter Info</button>
+        @if(_showShelterForm)
+        {
+            <form class="form" @onsubmit="@ConfirmShelterEdit">
+                <div class="row">
+                    <div class="col form-group">Name: <input @bind-value="@_shelter.Name" class="form-control"/></div>
+                    <div class="col form-group">Phone: <input @bind-value="@_shelter.Phone" class="form-control"/></div>
+                    <div class="col form-group">Email: <input @bind-value="@_shelter.Email" class="form-control"/></div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">Street Address: <input @bind-value="@_shelter.StreetAddress"  class="form-control"/></div>
+                    <div class="col-4 form-group">City: <input @bind-value="@_shelter.City"  class="form-control"/></div>
+                    <div class="col-1 form-group">State: <input  @bind-value="@_shelter.State" class="form-control"/></div>
+                    <div class="col-1 form-group">Zip: <input  @bind-value="@_shelter.Zip" class="form-control"/></div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">Description: <textarea @bind="@_shelter.Description" class="form-control" /></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-warning" @onclick="@CancelShelterEdit" type="button">Cancel</button></div>
+                </div>
+            </form>
+        }
     }
 }

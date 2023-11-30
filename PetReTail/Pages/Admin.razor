@@ -1,18 +1,22 @@
 @page "/admin"
 
-@if(_loggedIn)
+@if(!_loggedIn)
 {
-    <div class="mb-3">
+    <div class="d-flex justify-content-center">
+   <form class="form w-25 border border-dark rounded p-2" @onsubmit="@TryLogin">
+        <div class="mb-3 form-group">
             <label>Username: </label>
-            <input @bind-value="@_username" placeholder="username"/>
+            <input @bind-value="@_username" placeholder="username" class="form-control"/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 form-group">
             <label>Password: </label>
-            <input @bind-value="@_password" type="password" placeholder="password"/>
+            <input @bind-value="@_password" type="password" placeholder="password" class="form-control"/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 form-group d-flex justify-content-center">
             <button type="submit" class="btn btn-success">Log In</button>
         </div>
+    </form>
+    </div>
 }
 else
 {
@@ -24,22 +28,59 @@ else
     {
         @if(_showShelterForm)
         {
-            <form class="form" @onsubmit="@ConfirmEdit">
+            <form class="form" @onsubmit="@ConfirmShelterEdit">
+                @if(_showShelterError)
+                {
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            @_errmsg
+                        </div>
+                    </div>
+                }
                 <div class="row">
-                    <div class="col">Name: <input @bind-value="@_editShelter.Name"/></div>
-                    <div class="col">Phone: <input @bind-value="@_editShelter.Phone"/></div>
-                    <div class="col">Email: <input @bind-value="@_editShelter.Email"/></div>
+                    <div class="col form-group">Name: <input @bind-value="@_editShelter.Name" class="form-control"/></div>
+                    <div class="col form-group">Phone: <input @bind-value="@_editShelter.Phone" class="form-control"/></div>
+                    <div class="col form-group">Email: <input @bind-value="@_editShelter.Email" class="form-control"/></div>
                 </div>
                 <div class="row">
-                    <div class="col">Street Address: <input @bind-value="@_editShelter.StreetAddress" /></div>
-                    <div class="col-4">City: <input @bind-value="@_editShelter.City" /></div>
-                    <div class="col-1">State: <input  @bind-value="@_editShelter.State"/></div>
-                    <div class="col-1">Zip: <input  @bind-value="@_editShelter.Zip"/></div>
+                    <div class="col form-group">Street Address: <input @bind-value="@_editShelter.StreetAddress"  class="form-control"/></div>
+                    <div class="col-4 form-group">City: <input @bind-value="@_editShelter.City"  class="form-control"/></div>
+                    <div class="col-1 form-group">State: <input  @bind-value="@_editShelter.State" class="form-control"/></div>
+                    <div class="col-1 form-group">Zip: <input  @bind-value="@_editShelter.Zip" class="form-control"/></div>
                 </div>
                 <div class="row">
-                    <div class="col"><textarea @bind="@_editShelter.Description" /></div>
-                    <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
-                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                    <div class="col form-group">Description: <textarea @bind="@_editShelter.Description" class="form-control" /></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-warning" @onclick="@CancelShelterEdit" type="button">Cancel</button></div>
+                </div>
+            </form>
+        }
+        @if(_showNewShelterForm)
+        {
+            <form class="form" @onsubmit="@ConfirmShelterEdit">
+                @if(_showShelterError)
+                {
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            @_errmsg
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col form-group">Name: <input @bind-value="@_newShelter.Name" class="form-control"/></div>
+                    <div class="col form-group">Phone: <input @bind-value="@_newShelter.Phone" class="form-control"/></div>
+                    <div class="col form-group">Email: <input @bind-value="@_newShelter.Email" class="form-control"/></div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">Street Address: <input @bind-value="@_newShelter.StreetAddress"  class="form-control"/></div>
+                    <div class="col-4 form-group">City: <input @bind-value="@_newShelter.City"  class="form-control"/></div>
+                    <div class="col-1 form-group">State: <input  @bind-value="@_newShelter.State" class="form-control"/></div>
+                    <div class="col-1 form-group">Zip: <input  @bind-value="@_newShelter.Zip" class="form-control"/></div>
+                </div>
+                <div class="row">
+                    <div class="col form-group">Description: <textarea @bind="@_newShelter.Description" class="form-control" /></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-success" type="submit">Confirm</button></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-warning" @onclick="@CancelShelterEdit" type="button">Cancel</button></div>
                 </div>
             </form>
         }
@@ -72,7 +113,10 @@ else
                     <td>@shelter.Phone</td>
                     <td>@shelter.Email</td>
                 </tr>
-
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td colspan="9">@shelter.Description</td>
+                </tr>
             }
             </tbody>
         </table>
@@ -85,8 +129,11 @@ else
                     <div class="col">Age: <input @bind-value="@_editAnimal.Age" /></div>
                     <div class="col">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
                     <div class="col">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+                </div>
+                <div class="row">
+                    <div class="col">Description: <textarea class="form-control" @bind="@_editAnimal.Description" /></div>
                     <div class="col-1"><button class="btn btn-success" type="submit">Confirm</button></div>
-                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit">Cancel</button></div>
+                    <div class="col-1"><button class="btn btn-warning" @onclick="@CancelEdit" type="button">Cancel</button></div>
                 </div>
             </form>
         }
@@ -102,13 +149,12 @@ else
                     <th>Age</th>
                     <th>Vaccine Status</th>
                     <th>Spayed/Neutured</th>
+                    <th>Date Received</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach(List<AnimalModel> animalList in _animals)
+            @foreach(AnimalModel animal in _animals)
             {
-                foreach(AnimalModel animal in animalList)
-                {
                     <tr>
                         <td><button class="btn btn-info" type="button" @onclick="@(() => EditAnimal(@animal.ID))">Edit</button></td>
                         <td><button class="btn btn-danger" type="button" @onclick="@(() => DeleteAnimal(@animal.ID))">Remove</button></td>
@@ -120,8 +166,12 @@ else
                         <td>@animal.Age</td>
                         <td>@animal.IsVaxed</td>
                         <td>@animal.IsFixed</td>
+                        <td>@animal.DateReceived</td>
                     </tr>
-                }
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td colspan="9">@animal.Description</td>
+                    </tr>
             }
             </tbody>
         </table>

@@ -1,0 +1,55 @@
+@page "/viewpets"
+@using PetReTail.Pages.Components
+
+<PageTitle>View Pets</PageTitle>
+
+<form @onsubmit="Filter" class="form mb-2">
+    <div class="row">
+        <div class="col form-group">
+            Shelter: 
+            <select @bind="@_searchModel.ShelterID" class="form-control" >
+                @foreach(ShelterModel shelter in _shelters)
+                {
+                    <option value="@shelter.ID">
+                        @shelter.Name
+                    </option>
+                }
+            </select> 
+        </div>
+        <div class="col form-group">
+            Type: 
+            <select @bind="@_searchModel.Type" class="form-control" >
+                @foreach(string type in _types)
+                {
+                    <option value="@type">
+                        @type
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col form-group">
+            Age: 
+            <select @bind="@_searchModel.Age" class="form-control" >
+                @foreach(string age in _ages)
+                {
+                    <option value="@age">
+                        @age
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-1">
+            <button type="submit" class="btn btn-success">Filter</button>
+        </div>
+        <div class="col-1">
+            <button type="clear" class="btn btn-warning">Clear</button>
+        </div>
+    </div>
+</form>
+
+<div class="d-flex flex-wrap">
+@foreach(AnimalModel animal in _animals)
+{
+    <PreviewCard Animal="@animal" />
+}
+</div>
