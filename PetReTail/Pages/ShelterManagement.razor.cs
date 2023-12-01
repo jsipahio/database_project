@@ -54,6 +54,7 @@ namespace PetReTail.Pages
         private void ConfirmEdit()
         {
             DBMgr.EditAnimal(_editAnimal);
+            _animals = DBMgr.GetAllAnimals(_shelter.ID);
             _showForm = false;
         }
         private void StartShelterEdit()
@@ -79,7 +80,9 @@ namespace PetReTail.Pages
         }
         private void ConfirmNewAnimal()
         {
+            _newAnimal.ShelterID = _shelter.ID;
             DBMgr.AddAnimal(_newAnimal);
+            _animals = DBMgr.GetAllAnimals(_shelter.ID);
             _showNewAnimalForm = false;
         }
     }

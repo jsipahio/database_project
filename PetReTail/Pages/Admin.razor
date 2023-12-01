@@ -22,10 +22,11 @@ else
 {
     @if(_shelters == null)
     {
-        <em>No animals found for your shelter</em>
+        <em>No shelters to manage</em>
     }
     else
     {
+        <button class="btn btn-primary" @onclick="@StartNewShelter">Add New Shelter</button>
         @if(_showShelterForm)
         {
             <form class="form" @onsubmit="@ConfirmShelterEdit">
@@ -57,7 +58,7 @@ else
         }
         @if(_showNewShelterForm)
         {
-            <form class="form" @onsubmit="@ConfirmShelterEdit">
+            <form class="form" @onsubmit="@ConfirmNewShelter">
                 @if(_showShelterError)
                 {
                     <div class="row">
@@ -67,6 +68,7 @@ else
                     </div>
                 }
                 <div class="row">
+                    <div class="col form-group">ID: <input @bind-value="@_newShelter.ID" class="form-control" /></div>
                     <div class="col form-group">Name: <input @bind-value="@_newShelter.Name" class="form-control"/></div>
                     <div class="col form-group">Phone: <input @bind-value="@_newShelter.Phone" class="form-control"/></div>
                     <div class="col form-group">Email: <input @bind-value="@_newShelter.Email" class="form-control"/></div>
@@ -80,7 +82,7 @@ else
                 <div class="row">
                     <div class="col form-group">Description: <textarea @bind="@_newShelter.Description" class="form-control" /></div>
                     <div class="col-1 form-group mt-auto"><button class="btn btn-success" type="submit">Confirm</button></div>
-                    <div class="col-1 form-group mt-auto"><button class="btn btn-warning" @onclick="@CancelShelterEdit" type="button">Cancel</button></div>
+                    <div class="col-1 form-group mt-auto"><button class="btn btn-warning" @onclick="@CancelNewShelter" type="button">Cancel</button></div>
                 </div>
             </form>
         }

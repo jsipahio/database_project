@@ -2,7 +2,7 @@ namespace PetReTail.Data
 {
     public struct AdopterModel
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string First { get; set; }
         public string Last { get; set; }
         public string StreetAddress { get; set; }

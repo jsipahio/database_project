@@ -17,6 +17,9 @@ namespace PetReTail.Data
             public static string GET_USER_INFO = "GetUserInfo";
             public static string ADD_USER = "CreateNewUser";
             public static string ADD_ANIMAL = "AddAnimal";
+            public static string ADD_SHELTER = "AddShelter";
+            public static string ADD_ADOPTER = "AddAdopter";
+            public static string ADOPT = "AdoptPet";
         }
         private static string _connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["local"].ConnectionString;
         public static bool TryLogin(string role, string user, string pass)
@@ -242,53 +245,62 @@ namespace PetReTail.Data
             {
                 SqlCommand cmd;
                 SqlParameter datereceived, name, type, breed, gender, age, is_vaxed, is_fixed, fees, shelter_id, description, status, errmsg;
-
                 using (SqlConnection cnn = new SqlConnection(_connectionString))
                 {
                     cnn.Open();
                     cmd = cnn.CreateCommand();
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = StoredProcs.GET_SINGLE_ANIMAL;
+                    cmd.CommandText = StoredProcs.ADD_ANIMAL;
 
 
                     name = new SqlParameter("@p_name", SqlDbType.VarChar, 50);
                     name.Direction = ParameterDirection.Input;
+                    name.Value = animal.Name;
                     cmd.Parameters.Add(name);
 
                     type = new SqlParameter("@p_type", SqlDbType.VarChar, 50);
                     type.Direction = ParameterDirection.Input;
+                    type.Value = animal.Type;
                     cmd.Parameters.Add(type);
 
                     breed = new SqlParameter("@p_breed", SqlDbType.VarChar, 50);
                     breed.Direction = ParameterDirection.Input;
+                    breed.Value = animal.Breed;
                     cmd.Parameters.Add(breed);
 
                     gender = new SqlParameter("@p_gender", SqlDbType.VarChar, 1);
                     gender.Direction = ParameterDirection.Input;
+                    gender.Value = animal.Gender;
                     cmd.Parameters.Add(gender);
 
                     age = new SqlParameter("@p_age", SqlDbType.Int);
                     age.Direction = ParameterDirection.Input;
+                    age.Value = animal.Age;
                     cmd.Parameters.Add(age);
 
                     is_vaxed = new SqlParameter("@p_is_vaxed", SqlDbType.VarChar, 10);
                     is_vaxed.Direction = ParameterDirection.Input;
+                    is_vaxed.Value = animal.IsVaxed;
                     cmd.Parameters.Add(is_vaxed);
 
                     is_fixed = new SqlParameter("@p_is_fixed", SqlDbType.VarChar, 10);
                     is_fixed.Direction = ParameterDirection.Input;
+                    is_fixed.Value = animal.IsFixed;
                     cmd.Parameters.Add(is_fixed);
                     
                     fees = new SqlParameter("@p_fees", SqlDbType.Decimal);
                     fees.Direction = ParameterDirection.Input;
+                    fees.Value = animal.Fee;
                     cmd.Parameters.Add(fees);
 
                     shelter_id = new SqlParameter("@p_shelter_id", SqlDbType.VarChar, 6);
                     shelter_id.Direction = ParameterDirection.Input;
+                    shelter_id.Value = animal.ShelterID;
                     cmd.Parameters.Add(shelter_id);
                     
                     description = new SqlParameter("@p_description", SqlDbType.VarChar, 500);
                     description.Direction = ParameterDirection.Input;
+                    description.Value = animal.Description;
                     cmd.Parameters.Add(description);
 
                     if(animal.DateReceived == null)
@@ -333,7 +345,7 @@ namespace PetReTail.Data
             {
                 List<AnimalModel> animals = new List<AnimalModel>();
 
-                string sqlqry = "select top 5 animal_id, animal_name, type, breed, age from Animal order by date_received desc";
+                string sqlqry = "select top 5 a.animal_id, a.animal_name, a.type, a.breed, a.age from Animal a left join AdoptionDetails ad on a.animal_id = ad.animal_id where isnull(ad.animal_id, 0) = 0 order by date_received desc";
 
                 SqlCommand cmd;
                 SqlParameter pqty = new SqlParameter("@p_qty", SqlDbType.Int);
@@ -732,7 +744,7 @@ namespace PetReTail.Data
                     email_address.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(email_address);
 
-                    description = new SqlParameter("@p_description", SqlDbType.VarChar, 500);
+                    description = new SqlParameter("@p_description", SqlDbType.VarChar, 1500);
                     description.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(description);
                     
@@ -831,6 +843,81 @@ namespace PetReTail.Data
                 throw;
             }
         }
+        public static void AddShelter(ShelterModel shelterModel)
+        {
+            try
+            {
+                SqlCommand cmd;
+                SqlParameter shelter_id = new SqlParameter("@p_shelter_id", SqlDbType.VarChar, 6);
+                SqlParameter param, status, errmsg;
+
+                using(SqlConnection cnn = new SqlConnection(_connectionString))
+                {
+                    cnn.Open();
+                    cmd = cnn.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = StoredProcs.ADD_SHELTER;
+
+                    shelter_id.Direction = ParameterDirection.Input;
+                    shelter_id.Value = shelterModel.ID;
+                    cmd.Parameters.Add(shelter_id);
+
+                    param = new SqlParameter("@p_name", SqlDbType.VarChar, 50);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.Name;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_street", SqlDbType.VarChar, 255);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.StreetAddress;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_city", SqlDbType.VarChar, 100);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.City;
+                    cmd.Parameters.Add(param);
+                    
+                    param = new SqlParameter("@p_state", SqlDbType.VarChar, 2);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.State;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_zip", SqlDbType.VarChar, 5);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.Zip;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_phone", SqlDbType.VarChar, 10);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.Phone;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_email", SqlDbType.VarChar, 50);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.Email;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_description", SqlDbType.VarChar, 1500);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelterModel.Description;
+                    cmd.Parameters.Add(param);
+
+                    status = new SqlParameter("@p_status", SqlDbType.Int);
+                    status.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(status);
+                    
+                    errmsg = new SqlParameter("@p_errmsg", SqlDbType.VarChar, 500);
+                    errmsg.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(errmsg);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public static bool DeleteShelter(string id)
         {
             try
@@ -917,7 +1004,7 @@ namespace PetReTail.Data
                     param.Value = editModel.Email;
                     cmd.Parameters.Add(param);
 
-                    param = new SqlParameter("@p_description", SqlDbType.VarChar, 500);
+                    param = new SqlParameter("@p_description", SqlDbType.VarChar, 1500);
                     param.Direction = ParameterDirection.Input;
                     param.Value = editModel.Description;
                     cmd.Parameters.Add(param);
@@ -935,6 +1022,9 @@ namespace PetReTail.Data
         {
             try
             {
+
+                if(string.IsNullOrEmpty(shelterID)) Console.WriteLine("what the hell");
+                else Console.WriteLine(shelterID);
                 string hashedPass;
 
                 // PasswordHasher<string> passwordHasher = new PasswordHasher<string>();
@@ -1000,8 +1090,9 @@ namespace PetReTail.Data
                     param.Value = "shelter";
                     cmd.Parameters.Add(param);
                     
-                    param = new SqlParameter("@p_shelter", SqlDbType.VarChar, 10);
+                    param = new SqlParameter("@p_shelter", SqlDbType.VarChar, 6);
                     param.Direction = ParameterDirection.Input;
+                    //Console.WriteLine("Shelter id = " + shelterID);
                     param.Value = shelterID;
                     cmd.Parameters.Add(param);
 
@@ -1022,6 +1113,127 @@ namespace PetReTail.Data
                         default:
                             return false;
                     }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static int AddAdopter(AdopterModel adopterModel)
+        {
+            try
+            {
+                SqlCommand cmd;
+                SqlParameter first = new SqlParameter("@p_first", SqlDbType.VarChar, 50);
+                SqlParameter param, status, errmsg, id;
+
+                using(SqlConnection cnn = new SqlConnection(_connectionString))
+                {
+                    cnn.Open();
+                    cmd = cnn.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = StoredProcs.ADD_ADOPTER;
+
+                    first.Direction = ParameterDirection.Input;
+                    first.Value = adopterModel.First;
+                    cmd.Parameters.Add(first);
+
+                    param = new SqlParameter("@p_last", SqlDbType.VarChar, 50);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.Last;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_street", SqlDbType.VarChar, 255);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.StreetAddress;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_city", SqlDbType.VarChar, 100);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.City;
+                    cmd.Parameters.Add(param);
+                    
+                    param = new SqlParameter("@p_state", SqlDbType.VarChar, 2);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.State;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_zip", SqlDbType.VarChar, 5);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.Zip;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_phone", SqlDbType.VarChar, 10);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.Phone;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_email", SqlDbType.VarChar, 50);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterModel.Email;
+                    cmd.Parameters.Add(param);
+
+                    status = new SqlParameter("@p_status", SqlDbType.Int);
+                    status.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(status);
+                    
+                    id = new SqlParameter("@p_id", SqlDbType.Int);
+                    id.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(id);
+                    
+                    errmsg = new SqlParameter("@p_errmsg", SqlDbType.VarChar, 500);
+                    errmsg.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(errmsg);
+
+                    cmd.ExecuteNonQuery();
+
+                    return (int)id.Value;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static void AdoptPet(int adopterId, int animal_id, string shelter_id)
+        {
+             try
+            {
+                SqlCommand cmd;
+                SqlParameter param, status, errmsg, id;
+
+                using(SqlConnection cnn = new SqlConnection(_connectionString))
+                {
+                    cnn.Open();
+                    cmd = cnn.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = StoredProcs.ADOPT;
+
+                    param = new SqlParameter("@p_adopterID", SqlDbType.Int);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = adopterId;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_animalID", SqlDbType.Int);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = animal_id;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("@p_shelterID", SqlDbType.VarChar, 6);
+                    param.Direction = ParameterDirection.Input;
+                    param.Value = shelter_id;
+                    cmd.Parameters.Add(param);
+
+                    status = new SqlParameter("@p_status", SqlDbType.Int);
+                    status.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(status);
+                    
+                    errmsg = new SqlParameter("@p_errmsg", SqlDbType.VarChar, 500);
+                    errmsg.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(errmsg);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception)

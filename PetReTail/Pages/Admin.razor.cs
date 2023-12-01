@@ -54,7 +54,8 @@ namespace PetReTail.Pages
         }
         private void DeleteShelter(string id)
         {
-            Console.WriteLine(id);
+            DBMgr.DeleteShelter(id);
+            _shelters = DBMgr.GetAllShelters();
         }
         private void EditShelter(string id)
         {
@@ -70,6 +71,11 @@ namespace PetReTail.Pages
         private void ConfirmEdit()
         {
             DBMgr.EditAnimal(_editAnimal);
+            _animals = new List<AnimalModel>();
+            foreach (ShelterModel shelter in _shelters)
+            {
+                _animals.AddRange(DBMgr.GetAllAnimals(shelter.ID));
+            }
             _showForm = false;
         }
         private void CancelShelterEdit()
@@ -83,6 +89,20 @@ namespace PetReTail.Pages
             
             _shelters = DBMgr.GetAllShelters();
             _showShelterForm = false;
+        }
+        private void StartNewShelter()
+        {
+            _showNewShelterForm = true;
+        }
+        private void ConfirmNewShelter()
+        {
+            DBMgr.AddShelter(_newShelter);
+            _shelters = DBMgr.GetAllShelters();
+            _showNewShelterForm = false;
+        }
+        private void CancelNewShelter()
+        {
+            _showNewShelterForm = false;
         }
     }
 }

@@ -14,6 +14,8 @@ namespace PetReTail.Pages
         }
         private void AddUser()
         {
+            
+            Console.WriteLine("Shelter id = " + _userModel.ShelterID);
             if(DBMgr.CreateNewUser(_userModel.UserName, _password, _userModel.Email, _userModel.FirstName, _userModel.LastName, _userModel.ShelterID))
             {
 

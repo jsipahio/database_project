@@ -22,7 +22,8 @@
     </div>
     <div class="row">
         <div class="col-4 form-group">
-            Select Shelter: <select @bind="@_userModel.ShelterID" class="form-control">
+            Select Shelter: @*<input @bind-value="@_userModel.ShelterID" class="form-control"/>*@
+            <select @bind="@_userModel.ShelterID" class="form-control">
                 @foreach (ShelterModel shelter in _shelters)
                 {
                     <option value="@shelter.ID">
@@ -30,6 +31,7 @@
                     </option>
                 }
             </select>
+            @*_userModel.ShelterID*@
         </div>
         <div class="col-2 form-group">
             <button type="submit" class="btn btn-success">Create Account</button>

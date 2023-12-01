@@ -17,17 +17,17 @@ GO
 -- =============================================
 
 -- =============================================
-alter PROCEDURE GetSingleShelter
+create PROCEDURE AddShelter
 	-- Add the parameters for the stored procedure here
 	@p_shelter_id     VARCHAR(6)
-    ,@p_name          varchar(50) OUT
-    ,@p_street        varchar(50) OUT
-    ,@p_city          varchar(50) OUT
-    ,@p_state         varchar(2) OUT
-    ,@p_zip           varchar(5) OUT
-    ,@p_phone         varchar(10) out
-    ,@p_email         varchar(50) out
-    ,@p_description   varchar(1500) out
+    ,@p_name          varchar(50)
+    ,@p_street        varchar(50)
+    ,@p_city          varchar(50)
+    ,@p_state         varchar(2) 
+    ,@p_zip           varchar(5) 
+    ,@p_phone         varchar(10)
+    ,@p_email         varchar(50)
+    ,@p_description   varchar(1500) 
     ,@p_status        int OUT
     ,@p_errmsg        varchar(500) out
 AS
@@ -38,31 +38,34 @@ BEGIN
 
     -- Insert statements for procedure here
 
-    select 
-        @p_name = shelter_name   
-        ,@p_street = street_address
-        ,@p_city = city   
-        ,@p_state = state
-        ,@p_zip = zip
-        ,@p_phone = phone_num  
-        ,@p_email = email_address
-        ,@p_description = description
-    from Shelter
-    where shelter_id = @p_shelter_id
+    insert into Shelter (
+        shelter_id      
+        ,shelter_name    
+        ,street_address  
+        ,city            
+        ,[state]         
+        ,zip             
+        ,phone_num       
+        ,email_address   
+        ,[description]	
+    )
+    values (
+        @p_shelter_id
+        ,@p_name        
+        ,@p_street     
+        ,@p_city       
+        ,@p_state      
+        ,@p_zip        
+        ,@p_phone      
+        ,@p_email      
+        ,@p_description
+    )
 
     set @p_status = 0
     set @p_errmsg = 'Success'
 
 	SELECT 
-        @p_name        
-        ,@p_street       
-        ,@p_city      
-        ,@p_state     
-        ,@p_zip        
-        ,@p_phone   
-        ,@p_email
-        ,@p_description
-        ,@p_status     
+        @p_status     
         ,@p_errmsg     
 END
 GO

@@ -13,7 +13,12 @@ namespace PetReTail.Pages
         }
         private void RequestAdopt()
         {
-
+            _adopter.ID = DBMgr.AddAdopter(_adopter);
+            DBMgr.AdoptPet(_adopter.ID, _animal.ID, _animal.ShelterID);
+        }
+        private void RequestInfo()
+        {
+            DBMgr.AddAdopter(_adopter);
         }
     }
 }

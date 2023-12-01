@@ -17,7 +17,7 @@ GO
 -- =============================================
 
 -- =============================================
-create PROCEDURE AddAnimal 
+alter PROCEDURE AddAnimal 
 	-- Add the parameters for the stored procedure here
     @p_name         varchar(50)
     ,@p_type        varchar(50)

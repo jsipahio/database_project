@@ -26,8 +26,9 @@ else
     {
         <form class="form" @onsubmit="@ConfirmNewAnimal">
             <div class="row">
-                <div class="col form-group">Name: <input @bind-value="@_editAnimal.Name" class="form-control"/></div>
-                <div class="col form-group">Breed: <input @bind-value="@_editAnimal.Breed" class="form-control" /></div>
+                <div class="col form-group">Name: <input @bind-value="@_newAnimal.Name" class="form-control"/></div>
+                <div class="col form-group">Type: <input @bind-value="@_newAnimal.Type" class="form-control" /></div>
+                <div class="col form-group">Breed: <input @bind-value="@_newAnimal.Breed" class="form-control" /></div>
                 <div class="col form-group">Age: 
                     <select @bind="@_editAnimal.Age" class="form-control">
                         <option value="0">Young</option>
@@ -38,17 +39,18 @@ else
             </div>
             <div class="row">
                 <div class="col form-group">Date Received: <input type="date" @bind-value="@_newAnimal.DateReceived" class="form-control"/></div>
+                <div class="col form-group">Fee: <input @bind-value="@_newAnimal.Fee" class="form-control"></div>
                 <div class="col form-group">Gender: 
                     <select @bind="@_newAnimal.Gender" class="form-control">
                         <option value="M">Male</option>
                         <option value="F">Female</option>
                     </select>
                 </div>
-                <div class="col form-group mt-auto">Vaccine Status: <input type="checkbox" @bind-value="@_editAnimal.IsVaxed" checked="@_editAnimal.IsVaxed"/></div>
-                <div class="col form-group mt-auto">Spayed/Neutered: <input type="checkbox" @bind-value="@_editAnimal.IsFixed" checked="@_editAnimal.IsFixed"/></div>
+                <div class="col form-group mt-auto">Vaccine Status: <input type="checkbox" @bind-value="@_newAnimal.IsVaxed" checked="@_newAnimal.IsVaxed"/></div>
+                <div class="col form-group mt-auto">Spayed/Neutered: <input type="checkbox" @bind-value="@_newAnimal.IsFixed" checked="@_newAnimal.IsFixed"/></div>
             </div>
             <div class="row">
-                <div class="col form-group">Description: <textarea class="form-control" @bind="@_editAnimal.Description" /></div>
+                <div class="col form-group">Description: <textarea class="form-control" @bind="@_newAnimal.Description" /></div>
                 <div class="col-1 form-group mt-auto"><button class="btn btn-success mt-auto" type="submit">Confirm</button></div>
                 <div class="col-1 form-group mt-auto"><button class="btn btn-warning mt-auto" @onclick="@CancelNewAnimal" type="button">Cancel</button></div>
             </div>

@@ -12,8 +12,8 @@ create table Shelter(
     [state]         varchar(2),
     zip             varchar(5),
     phone_num       varchar(10),
-    email_address   varchar(10),
-	[description]	varchar(500)
+    email_address   varchar(50),
+	[description]	varchar(1500)
 )
 go
 
@@ -48,7 +48,7 @@ go
 
 create table [User](
     username        varchar(50) primary key,
-    [password]      varchar(16),
+    [password]      varchar(100),
     [role]          varchar(10),
     shelter_id      varchar(6) foreign key references Shelter(shelter_id),
     first_name      varchar(50),
